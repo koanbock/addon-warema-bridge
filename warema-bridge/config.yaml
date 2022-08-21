@@ -5,9 +5,10 @@ slug: "warema-bridge"
 description: "Control your Warema WMS system"
 url: "https://github.com/koanbock/addon-warema-bridge"
 arch:
+  - armhf
+  - armv7
   - aarch64
   - amd64
-  - armv7
   - i386
 init: false
 boot: auto
@@ -24,7 +25,7 @@ schema:
   wms_serial_port: "device(subsystem=tty)"
   ignored_devices: "str?"
   force_devices: "str?"
-image: "koanbock/addon-warema-bridge"
+image: "koanbock/{arch}-addon-warema-bridge"
 services: [
     "mqtt:need"
   ]
