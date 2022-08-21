@@ -12,7 +12,16 @@ RUN \
 COPY rootfs /
 
 WORKDIR /srv
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Setup base
+# hadolint ignore=DL3003
+RUN \
+    apk add --no-cache --virtual .build-deps python3 make g++ linux-headers
+RUN \
+    apk add --no-cache npm
+    
 RUN npm ci
 
 RUN apk del --no-cache --purge .build-deps && rm -rf /root/.npm /root/.cache
