@@ -20,23 +20,25 @@ var registered_shades = []
 var shade_position = []
 
 function registerDevice(element) {
-  console.log('Registering ' + element.snr)
-  var topic = 'homeassistant/cover/' + element.snr + '/' + element.snr + '/config'
-  var availability_topic = 'warema/' + element.snr + '/availability'
+  snr = element.snr.replace(/^0+/, '')
+  console.log('Found device of type "' + element.typeStr + '" with type #' + element.type)
+  console.log('Registering ' + snr)
+  var topic = 'homeassistant/cover/' + snr + '/' + snr + '/config'
+  var availability_topic = 'warema/' + snr + '/availability'
 
   var base_payload = {
-    name: element.snr,
+    name: snr,
     availability: [
       {topic: 'warema/bridge/state'},
       {topic: availability_topic}
     ],
-    unique_id: element.snr
+    unique_id: snr
   }
 
   var base_device = {
-    identifiers: element.snr,
+    identifiers: snr,
     manufacturer: "Warema",
-    name: element.snr
+    name: snr
   }
 
   var model
@@ -65,11 +67,11 @@ function registerDevice(element) {
         },
         position_open: 0,
         position_closed: 100,
-        command_topic: 'warema/' + element.snr + '/set',
-        position_topic: 'warema/' + element.snr + '/position',
-        tilt_status_topic: 'warema/' + element.snr + '/tilt',
-        set_position_topic: 'warema/' + element.snr + '/set_position',
-        tilt_command_topic: 'warema/' + element.snr + '/set_tilt',
+        command_topic: 'warema/' + snr + '/set',
+        position_topic: 'warema/' + snr + '/position',
+        tilt_status_topic: 'warema/' + snr + '/tilt',
+        set_position_topic: 'warema/' + snr + '/set_position',
+        tilt_command_topic: 'warema/' + snr + '/set_tilt',
         tilt_closed_value: -100,
         tilt_opened_value: 100,
         tilt_min: -100,
@@ -86,11 +88,11 @@ function registerDevice(element) {
         },
         position_open: 0,
         position_closed: 100,
-        command_topic: 'warema/' + element.snr + '/set',
-        position_topic: 'warema/' + element.snr + '/position',
-        tilt_status_topic: 'warema/' + element.snr + '/tilt',
-        set_position_topic: 'warema/' + element.snr + '/set_position',
-        tilt_command_topic: 'warema/' + element.snr + '/set_tilt',
+        command_topic: 'warema/' + snr + '/set',
+        position_topic: 'warema/' + snr + '/position',
+        tilt_status_topic: 'warema/' + snr + '/tilt',
+        set_position_topic: 'warema/' + snr + '/set_position',
+        tilt_command_topic: 'warema/' + snr + '/set_tilt',
         tilt_closed_value: -100,
         tilt_opened_value: 100,
         tilt_min: -100,
@@ -107,9 +109,9 @@ function registerDevice(element) {
         },
         position_open: 0,
         position_closed: 100,
-        command_topic: 'warema/' + element.snr + '/set',
-        position_topic: 'warema/' + element.snr + '/position',
-        set_position_topic: 'warema/' + element.snr + '/set_position',
+        command_topic: 'warema/' + snr + '/set',
+        position_topic: 'warema/' + snr + '/position',
+        set_position_topic: 'warema/' + snr + '/set_position',
       }
       break
     default:
@@ -118,13 +120,13 @@ function registerDevice(element) {
       return
   }
 
-  if (ignoredDevices.includes(element.snr.toString())) {
-    console.log('Ignoring and removing device ' + element.snr + ' (type ' + element.type + ')')
+  if (ignoredDevices.includes(snr.toString())) {
+    console.log('Ignoring and removing device ' + snr + ' (type ' + element.type + ')')
   } else {
-    console.log('Adding device ' + element.snr + ' (type ' + element.type + ')')
+    console.log('Adding device ' + snr + ' (type ' + element.type + ')')
 
-    stickUsb.vnBlindAdd(parseInt(element.snr), element.snr.toString());
-    registered_shades += element.snr
+    stickUsb.vnBlindAdd(parseInt(snr), element.snr.toString());
+    registered_shades += snr
     client.publish(availability_topic, 'online', {retain: true})
   }
   client.publish(topic, JSON.stringify(payload))
@@ -133,7 +135,7 @@ function registerDevice(element) {
 function registerDevices() {
   if (forceDevices && forceDevices.length) {
     forceDevices.forEach(element => {
-      registerDevice({snr: element, type: 25})
+      registerDevice({snr: element.split(':')[0], type: element.split(':')[1] ? element.split(':')[1] : 25 })
     })
   } else {
     console.log('Scanning...')
