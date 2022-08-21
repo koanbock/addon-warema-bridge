@@ -9,6 +9,7 @@
   "boot": "auto",
   "hassio_api": true,
   "image": "koanbock/addon-warema-bridge",
+  "init": false,
   "options": {
     "wms_serial_port": null
   },
