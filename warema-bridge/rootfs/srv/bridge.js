@@ -242,6 +242,7 @@ client.on('connect', function (connack) {
     {},
     callback
   );
+  client.publish('warema/bridge/state', 'online', {retain: true})
 })
 
 client.on('error', function (error) {
