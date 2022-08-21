@@ -16,8 +16,9 @@ jobs:
             --test \
             --all \
             --target warema-bridge \
-            --docker-hub koanbock/addon-warema-bridge
+            --docker-hub koanbock
   publish:
+    needs: build
     name: Publish
     runs-on: ubuntu-latest
     steps:
@@ -34,4 +35,4 @@ jobs:
           args: |
             --all \
             --target warema-bridge \
-            --docker-hub koanbock/addon-warema-bridge
+            --docker-hub koanbock
