@@ -1,6 +1,6 @@
 {
   "name": "Warema Bridge",
-  "version": "0.1.1-alpha.1",
+  "version": "0.1.1-alpha.2",
   "slug": "warema-bridge",
   "description": "Control your Warema WMS system",
   "arch": ["aarch64", "amd64", "armv7", "i386"],
@@ -10,7 +10,7 @@
   "hassio_api": true,
   "hassio_role": "default",
   "image": "koanbock/addon-warema-bridge",
-  "init": true,
+  "init": false,
   "options": {
     "wms_serial_port": null
   },
