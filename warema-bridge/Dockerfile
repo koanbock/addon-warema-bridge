@@ -10,6 +10,7 @@ RUN \
 
 # Copy root filesystem
 COPY rootfs /
+RUN chmod 777 /etc/services.d/warema-bridge/run
 
 WORKDIR /srv
 # Set shell
@@ -21,7 +22,7 @@ RUN \
     apk add --no-cache --virtual .build-deps python3 make g++ linux-headers
 RUN \
     apk add --no-cache npm
-    
+
 RUN npm ci
 
 RUN apk del --no-cache --purge .build-deps && rm -rf /root/.npm /root/.cache
