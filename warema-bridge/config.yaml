@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Warema Bridge
-version: "0.1.1-alpha.7"
+version: "0.1.1-alpha.8"
 slug: "warema-bridge"
 description: "Control your Warema WMS system"
 url: "https://github.com/koanbock/addon-warema-bridge"
