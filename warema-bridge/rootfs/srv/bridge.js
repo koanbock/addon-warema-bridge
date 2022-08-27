@@ -72,8 +72,8 @@ function registerDevice(element) {
         tilt_status_topic: 'warema/' + snr + '/tilt',
         set_position_topic: 'warema/' + snr + '/set_position',
         tilt_command_topic: 'warema/' + snr + '/set_tilt',
-        tilt_closed_value: -100,
-        tilt_opened_value: 100,
+        tilt_closed_value: 100,
+        tilt_opened_value: -100,
         tilt_min: -100,
         tilt_max: 100,
       }
