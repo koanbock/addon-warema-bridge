@@ -270,10 +270,19 @@ client.on('message', function (topic, message) {
         }
         break
       case 'set_position':
-        stickUsb.vnBlindSetPosition(device, parseInt(message), parseInt(shade_position[device]['angle']))
+        var angle = 0;
+        if(device in shade_position) {
+          angle = parseInt(shade_position[device]['angle']);
+        }
+
+        stickUsb.vnBlindSetPosition(device, parseInt(message), angle)
         break
       case 'set_tilt':
-        stickUsb.vnBlindSetPosition(device, parseInt(shade_position[device]['position']), parseInt(message))
+        var position = 0;
+        if(device in shade_position) {
+          position = parseInt(shade_position[device]['position']);
+        }
+        stickUsb.vnBlindSetPosition(device, position, parseInt(message))
         break
       //default:
       //  console.log('Unrecognised command from HA')
